@@ -1,0 +1,93 @@
+const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
+const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
+var poolData = {
+    UserPoolId: 'us-east-1_xxxxxxx08', // Your user pool id here
+    ClientId: 'xxxxxxxxxxxxxxxxxxx', // Your client id here
+};
+
+var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData); 
+
+var attributeList = [];
+
+var dataEmail = {
+    Name: 'email',
+    Value: 'abc@gmail.com',
+};
+
+
+
+var dataPhoneNumber = {
+    Name: 'phone_number',
+    Value: '+910000000000',
+};
+
+
+
+var adddress = {
+    Name: 'address',
+    Value: 'abc india',
+};
+
+
+var gender = {
+    Name: 'gender',
+    Value: 'male',
+};
+var birthdate = {
+    Name: 'birthdate',
+    Value: '1941-10-25',
+};
+
+var userName = {
+    Name: 'name',
+    Value: 'vineet karandikar',
+};
+
+
+var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+var attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(
+    dataPhoneNumber
+);
+
+var attributeAddress = new AmazonCognitoIdentity.CognitoUserAttribute(adddress);
+var attributeGender = new AmazonCognitoIdentity.CognitoUserAttribute(gender);
+var attributeBirthdate = new AmazonCognitoIdentity.CognitoUserAttribute(birthdate);
+var attributeName = new AmazonCognitoIdentity.CognitoUserAttribute(userName);
+
+attributeList.push(attributeName);
+attributeList.push(attributeEmail);
+attributeList.push(attributePhoneNumber);
+attributeList.push(attributeAddress);
+attributeList.push(attributeGender);
+attributeList.push(attributeBirthdate);
+
+
+
+async function cognitioConfirmRegistration() {
+   return new Promise((resolve, reject) => {
+        userPool.signUp('vineetabacus@gmail.com', 'Binomial007!', attributeList, null, function (
+            err,
+            result
+        ) {
+            if (err) {
+                console.log(err.message || JSON.stringify(err));
+                reject(err.message);
+            } else {
+                console.log('call result: ' + result);
+                resolve(result);
+            }
+
+        });
+    });
+
+}
+
+exports.handler = async (event) => {
+    let result = await cognitioConfirmRegistration();
+    console.log(result);
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    return response;
+};
