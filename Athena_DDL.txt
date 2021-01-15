@@ -1,0 +1,23 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS sales_market (
+         invoiceid string,
+         branch string,
+         city string,
+         customertype string,
+         gender string,
+         productline string,
+         unitprice double,
+         quantity bigint,
+         tax5percent double,
+         total double,
+         salesdt string,
+         salestime string,
+         payment string,
+         cogs double,
+         grossmarginpercentage double,
+         grossincome double,
+         rating double,
+         day String 
+) PARTITIONED BY (
+         year bigint,
+         month bigint 
+) STORED AS PARQUET LOCATION 's3://medium-demo/super-market-sales-curated-zone/sales/'
