@@ -65,7 +65,7 @@ attributeList.push(attributeBirthdate);
 
 async function cognitioSignUp() {
    return new Promise((resolve, reject) => {
-        userPool.signUp('vineetabacus@gmail.com', 'Binomial007!', attributeList, null, function (
+        userPool.signUp('xxxxxxxx@gmail.com', 'xxxxxxxxx!', attributeList, null, function (
             err,
             result
         ) {
